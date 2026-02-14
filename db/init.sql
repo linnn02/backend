@@ -1,1 +1,0 @@
--- future schema for publications
