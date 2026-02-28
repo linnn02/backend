@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Publication {
+  id           Int      @id @default(autoincrement())
+  openalexId   String   @unique
+  doi          String?  @unique
+  title        String
+  abstract     String?
+  year         Int?
+  venue        String?
+  url          String?
+  citations    Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  authors      PublicationAuthor[]
+  keywords     PublicationKeyword[]
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  openalexId String? @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  publications PublicationAuthor[]
+}
+
+model PublicationAuthor {
+  publicationId Int
+  authorId      Int
+
+  publication Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  author      Author      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@id([publicationId, authorId])
+}
+
+model Keyword {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  publications PublicationKeyword[]
+}
+
+model PublicationKeyword {
+  publicationId Int
+  keywordId     Int
+
+  publication Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  keyword     Keyword     @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+
+  @@id([publicationId, keywordId])
+}
