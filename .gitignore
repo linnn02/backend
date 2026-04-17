@@ -1,4 +1,6 @@
 node_modules
+backend/
+frontend/.vite/
 .env
 dist
 .idea
