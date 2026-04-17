@@ -20,15 +20,15 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        working-directory: ./backend/app
+        working-directory: ./app
         run: npm ci
 
       - name: Generate Prisma Client
-        working-directory: ./backend/app
+        working-directory: ./app
         run: npx prisma generate
 
       - name: Run Tests
-        working-directory: ./backend/app
+        working-directory: ./app
         env:
           JWT_SECRET: "test-secret"
         run: npm run test
