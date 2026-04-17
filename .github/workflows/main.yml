@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        working-directory: ./backend/app
+        run: npm ci
+
+      - name: Generate Prisma Client
+        working-directory: ./backend/app
+        run: npx prisma generate
+
+      - name: Run Tests
+        working-directory: ./backend/app
+        env:
+          JWT_SECRET: "test-secret"
+        run: npm run test
+
+      - name: Build and Push Docker Backend
+        if: github.event_name == 'push'
+        run: docker build -t scholar-app:latest ./backend/app
