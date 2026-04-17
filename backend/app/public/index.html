@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Data Harvester</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swagger UI dependencies (v5.11.0) -->
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="app-container glass-panel">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-atom"></i>
+                <h1>SciHarvester</h1>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-target="dashboard-view"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+                <button class="tab-btn" data-target="explore-view"><i class="fa-solid fa-book-open"></i> Explore</button>
+                <button class="tab-btn" data-target="harvest-view"><i class="fa-solid fa-download"></i> Harvester</button>
+                <button class="tab-btn" data-target="api-view"><i class="fa-solid fa-code"></i> API Docs</button>
+            </nav>
+        </header>
+
+        <main class="app-content">
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view-section active">
+                <div class="view-header">
+                    <h2>Platform Overview</h2>
+                    <p>Insights from your collected scientific publications.</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon"><i class="fa-solid fa-database"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Publications</h3>
+                            <h2 id="stat-total-publications">-</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="chart-container glass-panel">
+                        <h3>Top Publication Years</h3>
+                        <div class="list-wrapper" id="top-years-list">
+                            <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        </div>
+                    </div>
+                    <div class="chart-container glass-panel">
+                        <h3>Top Venues</h3>
+                        <div class="list-wrapper" id="top-venues-list">
+                            <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Explore View -->
+            <section id="explore-view" class="view-section">
+                <div class="view-header">
+                    <h2>Explore Database</h2>
+                    <p>Search through previously harvested data.</p>
+                </div>
+
+                <div class="search-bar glass-panel">
+                    <input type="text" id="explore-search-input" placeholder="Search by title or venue...">
+                    <button class="btn primary-btn" id="explore-search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Venue</th>
+                                <th>Year</th>
+                                <th>Citations</th>
+                            </tr>
+                        </thead>
+                        <tbody id="explore-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination" id="explore-pagination">
+                    <!-- Pagination info -->
+                </div>
+            </section>
+
+            <!-- Harvester View -->
+            <section id="harvest-view" class="view-section">
+                <div class="view-header">
+                    <h2>Metadata Harvester</h2>
+                    <p>Target queries to collect new publications via OpenAlex API.</p>
+                </div>
+
+                <div class="harvester-card glass-panel">
+                    <div class="input-group">
+                        <label for="harvest-query">Search Query</label>
+                        <input type="text" id="harvest-query" placeholder="e.g. quantum computing">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="harvest-limit">Limit Results</label>
+                        <input type="number" id="harvest-limit" value="20" min="1" max="100">
+                    </div>
+
+                    <button class="btn action-btn gradient-btn" id="harvest-btn">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Start Harvesting
+                    </button>
+                    
+                    <div id="harvest-status" class="status-msg"></div>
+                </div>
+            </section>
+
+            <!-- API Docs View (Swagger) -->
+            <section id="api-view" class="view-section">
+                <div class="view-header">
+                    <h2>API Documentation</h2>
+                    <p>Integrate with our harvested scientific data via REST APIs.</p>
+                </div>
+                <!-- The original swagger-ui background is overridden in standard CSS -->
+                <div id="swagger-ui" class="glass-panel" style="padding: 1rem; border-radius: 16px;"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
