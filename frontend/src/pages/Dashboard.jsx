@@ -38,7 +38,7 @@ export default function Dashboard() {
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
         <div>
           <h2 className="text-4xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">Platform Analytics</h2>
-          <p className="text-text-muted text-lg">System-wide insights, metadata harvesting statistics, and live research activity overview.</p>
+          <p className="text-text-muted text-lg">System-wide insights and metadata harvesting statistics.</p>
         </div>
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-green-500/30 bg-green-500/10 text-green-400 text-sm font-semibold max-w-fit shadow-[0_0_15px_rgba(34,197,94,0.1)]">
           <CheckCircle className="w-4 h-4" /> API Gateway Online
@@ -79,7 +79,7 @@ export default function Dashboard() {
 
         {/* Most Active Year Stat */}
         <div className="glass-panel p-6 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/50 transition-colors duration-300">
-          <div className="absolute -right-6 -top-6 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all duration-500"></div>
+           <div className="absolute -right-6 -top-6 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all duration-500"></div>
           <div className="flex justify-between items-start mb-4 z-10">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
               <Calendar className="w-7 h-7 text-white" />
@@ -96,63 +96,59 @@ export default function Dashboard() {
         {/* Timeline Chart (Mocked as Horizontal Bars) */}
         <div className="glass-panel p-6 lg:p-8 flex flex-col">
           <div className="flex items-center gap-3 border-b border-white/10 pb-5 mb-6">
-            <div className="p-2 bg-blue-500/20 rounded-lg"><Calendar className="text-blue-400 w-5 h-5" /></div>
-            <h3 className="text-xl font-bold text-white">Research Timeline</h3>
+             <div className="p-2 bg-blue-500/20 rounded-lg"><Calendar className="text-blue-400 w-5 h-5" /></div>
+             <h3 className="text-xl font-bold text-white">Research Timeline</h3>
           </div>
           <div className="space-y-6 flex-1">
             {stats?.topYears?.length > 0 ? stats.topYears.map((item, idx) => {
               const percentage = Math.max(8, Math.round((item._count.id / maxYearCount) * 100));
               return (
-                <div key={idx} className="relative group">
-                  <div className="flex justify-between text-sm font-medium mb-2">
-                    <span className="text-white bg-white/10 px-2 py-0.5 rounded">{item.year}</span>
-                    <span className="text-blue-300 font-bold">{item._count.id} entries</span>
-                  </div>
-                  <div className="w-full bg-black/40 rounded-full h-3 overflow-hidden shadow-inner border border-white/5">
-                    <div
-                      className="bg-gradient-to-r from-blue-500 to-cyan-400 h-full rounded-full transition-all duration-1000 ease-out relative group-hover:brightness-110"
-                      style={{ width: `${percentage}%` }}
-                    >
-                      <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </div>
+              <div key={idx} className="relative group">
+                <div className="flex justify-between text-sm font-medium mb-2">
+                  <span className="text-white bg-white/10 px-2 py-0.5 rounded">{item.year}</span>
+                  <span className="text-blue-300 font-bold">{item._count.id} entries</span>
+                </div>
+                <div className="w-full bg-black/40 rounded-full h-3 overflow-hidden shadow-inner border border-white/5">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 to-cyan-400 h-full rounded-full transition-all duration-1000 ease-out relative group-hover:brightness-110" 
+                    style={{ width: `${percentage}%` }}
+                  >
+                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                 </div>
-              )
-            }) : <p className="text-text-muted text-center py-4 bg-white/5 rounded-xl border border-white/5">No temporal data available</p>}
+              </div>
+            )}) : <p className="text-text-muted text-center py-4 bg-white/5 rounded-xl border border-white/5">No temporal data available</p>}
           </div>
         </div>
 
         {/* Global Venues Distribution */}
         <div className="glass-panel p-6 lg:p-8 flex flex-col">
           <div className="flex items-center gap-3 border-b border-white/10 pb-5 mb-6">
-            <div className="p-2 bg-pink-500/20 rounded-lg"><Globe className="text-pink-400 w-5 h-5" /></div>
-            <h3 className="text-xl font-bold text-white">Venue Distribution</h3>
+             <div className="p-2 bg-pink-500/20 rounded-lg"><Globe className="text-pink-400 w-5 h-5" /></div>
+             <h3 className="text-xl font-bold text-white">Venue Distribution</h3>
           </div>
           <div className="space-y-4 flex-1">
             {stats?.topVenues?.length > 0 ? stats.topVenues.map((item, idx) => {
               const percentage = Math.max(5, Math.round((item._count.id / maxVenueCount) * 100));
               return (
-                <div key={idx} className="relative p-4 rounded-xl bg-black/20 border border-white/5 hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 group shadow-lg">
-                  <div className="flex justify-between items-start gap-4 mb-3">
-                    <span className="font-semibold text-white/90 text-sm leading-tight">{item.venue || 'Unknown Organization'}</span>
-                    <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg px-2.5 py-1 rounded-md text-xs font-bold whitespace-nowrap">{item._count.id}</span>
-                  </div>
-                  <div className="w-full bg-black/40 rounded-full h-1.5 overflow-hidden shadow-inner">
-                    <div
-                      className="bg-gradient-to-r from-pink-500 to-purple-500 h-full rounded-full transition-all duration-1000 ease-out relative"
-                      style={{ width: `${percentage}%` }}
-                    >
-                      <div className="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]"></div>
-                    </div>
+              <div key={idx} className="relative p-4 rounded-xl bg-black/20 border border-white/5 hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 group shadow-lg">
+                <div className="flex justify-between items-start gap-4 mb-3">
+                  <span className="font-semibold text-white/90 text-sm leading-tight">{item.venue || 'Unknown Organization'}</span>
+                  <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg px-2.5 py-1 rounded-md text-xs font-bold whitespace-nowrap">{item._count.id}</span>
+                </div>
+                 <div className="w-full bg-black/40 rounded-full h-1.5 overflow-hidden shadow-inner">
+                  <div 
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 h-full rounded-full transition-all duration-1000 ease-out relative" 
+                    style={{ width: `${percentage}%` }}
+                  >
+                     <div className="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]"></div>
                   </div>
                 </div>
-              )
-            }) : <p className="text-text-muted text-center py-4 bg-white/5 rounded-xl border border-white/5">No venue data available</p>}
+              </div>
+            )}) : <p className="text-text-muted text-center py-4 bg-white/5 rounded-xl border border-white/5">No venue data available</p>}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-
