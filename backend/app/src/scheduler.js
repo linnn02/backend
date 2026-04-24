@@ -2,8 +2,6 @@ import cron from "node-cron";
 import { runHarvestingJob } from "./services/collector.service.js";
 import { logger } from "./services/logger.js";
 
-// Week 5: Cron/Scheduler
-// Runs every night at 2:00 AM to fetch daily updates
 export const initCronJobs = () => {
   logger.info("[Scheduler] Initializing cron jobs.");
 
